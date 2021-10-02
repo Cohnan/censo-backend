@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta # Para darle tiempo de vida a los tokens
 
+import json # Para leer archivo json de credenciales de DB
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -96,14 +98,17 @@ WSGI_APPLICATION = 'censoProy.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+with open('utils/db_credentials.json', 'r') as archivo:
+        db_credentials = json.load(archivo)
+
 DATABASES = {
     'default': {
         'ENGINE'   : 'django.db.backends.postgresql_psycopg2',
-        'NAME'     : 'db_comunidades',
-        'USER'     : 'usu_comunidades',
-        'PASSWORD' : 'contrasena',
-        'HOST'     : 'localhost',
-        'PORT'     : '5432'
+        'NAME'     : db_credentials["db_name"],
+        'USER'     : db_credentials["db_user"],
+        'PASSWORD' : db_credentials["db_pass"],
+        'HOST'     : db_credentials["db_ip"],
+        'PORT'     : db_credentials["db_port"]
     }
 }
 
