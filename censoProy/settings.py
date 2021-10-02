@@ -67,7 +67,7 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = { # En settings.py del proyecto
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permission.AllowAny',
+        'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication', # Usaremos tokens de JWT
