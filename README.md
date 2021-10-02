@@ -1,3 +1,27 @@
 # censo-backend
 
 Backend de la aplicación web de Censo de Pueblos Indígena, realizado como proyecto por Equipo 2 del grupo P8 del programa MisiónTIC 2022, Cohorte 2021, Ciclo 3.
+
+# Cómo Correr el Proyecto
+
+1. Tener servidor de postgres corriendo
+
+2. Crear archivo ``db_credentials.json`` dentro de la carpeta ``utils`` con la siguiente estructura:
+```{
+	"db_ip"      : "ip del servidor",
+	"db_port"    : "puerto de comunicacion con postgres", 
+    "db_name"    : "nombre base de datos",
+	"db_user"    : "nombre usuario de la base de datos",
+	"db_pass"    : "contraseña del usuario"
+```}
+
+3. Migrar la base de datos: Estando en la raiz del repositorio, en la linea de comandos escribir lo siguiente
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+4. Correr el servidor:
+```
+python manage.py runserver
+```
