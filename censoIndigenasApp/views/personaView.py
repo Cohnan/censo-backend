@@ -11,5 +11,5 @@ from ..serializers import PersonaSerializer
 class PersonaList(APIView):
     def get(self, request):
         lista_personas = Persona.objects.all()
-        serializer = PersonaSerializer(lista_personas)
-        return Response(sereializer.data)
+        serializer = PersonaSerializer(lista_personas, many = True)
+        return Response(serializer.data)
