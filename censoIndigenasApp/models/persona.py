@@ -1,7 +1,9 @@
 from django.db import models
 
 class Persona(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
+    tipo_doc = models.CharField(max_length = 4)
+    doc_id = models.IntegerField(null = True)
     ocupacion = models.CharField('Ocupacion', max_length = 40)#, unique=True)
     nombre = models.CharField('Nombre', max_length = 45)
     edad = models.IntegerField()
