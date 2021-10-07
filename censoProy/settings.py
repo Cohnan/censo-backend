@@ -74,6 +74,8 @@ REST_FRAMEWORK = { # En settings.py del proyecto
     )
 }
 
+AUTH_USER_MODEL = 'censoIndigenaApp.Usuario'
+
 ROOT_URLCONF = 'censoProy.urls'
 
 TEMPLATES = [
