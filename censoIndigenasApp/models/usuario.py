@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import make_password
 
 
 class UsuarioManager(BaseUserManager):
-    def create_user(self, email, password, es_coordinador = False): 
+    def create_user(self, email, password):#, es_coordinador = False): 
         if not email or not password:
             raise ValueError('Los Usuarios deben tener Email y Contraseña')
 
@@ -13,7 +13,7 @@ class UsuarioManager(BaseUserManager):
         )
 
         usuario.set_password(password)
-        usuario.es_coordinador = es_coordinador
+        #usuario.es_coordinador = es_coordinador
 
         usuario.save(using = self._db)
 
@@ -37,7 +37,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name = "Email", max_length = 100, unique = True)
     password = models.CharField(verbose_name = "Contraseña", max_length = 256)
     nombre = models.CharField(verbose_name = 'Nombre', max_length = 50)
-    es_coordinador = models.BooleanField(verbose_name = "Es Coordinador", default = False)
+    #es_coordinador = models.BooleanField(verbose_name = "Es Coordinador", default = False)
     es_admin = models.BooleanField(verbose_name = "Es Administrador", default = False)
 
     objects = UsuarioManager()
