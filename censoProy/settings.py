@@ -100,18 +100,18 @@ WSGI_APPLICATION = 'censoProy.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# with open('utils/db_credentials.json', 'r') as archivo:
-    #    db_credentials = json.load(archivo)
+with open('utils/db_credentials.json', 'r') as archivo:
+     db_credentials = json.load(archivo)
 
 DATABASES = {
     
-    'default': {
-       'ENGINE'   : 'django.db.backends.postgresql_psycopg2',
-        'NAME'     : 'censodb',
-        'USER'     : 'postgres',
-        'PASSWORD' : '4770',
-        'HOST'     : 'localhost' ,
-        'PORT'     : '5432',
+  'default': {
+        'ENGINE'   : 'django.db.backends.postgresql_psycopg2',
+        'NAME'     : db_credentials["db_name"],
+        'USER'     : db_credentials["db_user"],
+        'PASSWORD' : db_credentials["db_pass"],
+        'HOST'     : db_credentials["db_ip"],
+        'PORT'     : db_credentials["db_port"]
     }
 }
 
