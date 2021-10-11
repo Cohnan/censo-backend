@@ -23,7 +23,7 @@ class UsuarioManager(BaseUserManager):
         usuario = self.create_user(
             email = email,
             password = password,
-            es_coordinador = False
+            #es_coordinador = False
         )
 
         usuario.es_admin = True
