@@ -11,7 +11,7 @@ class Persona(models.Model):
     doc_id = models.IntegerField("Número de documento", null = True)
     id_ocupacion = models.ForeignKey(Ocupacion, related_name='Ocupación',on_delete= models.CASCADE)
     nombre = models.CharField('Nombre', max_length = 45)
-    fechadenaciemiento = models.DateField("Fecha de Nacimiento")
+    fechadenacimiento = models.DateField("Fecha de Nacimiento")
     id_resguardo = models.ForeignKey(Resguardo, related_name='Resguardo',on_delete= models.CASCADE)
     id_etnia = models.ForeignKey(Etnia, related_name='Etnia',on_delete= models.CASCADE)
     departamento = models.CharField('Departamento de Residencia', max_length = 45)

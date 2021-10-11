@@ -101,10 +101,11 @@ WSGI_APPLICATION = 'censoProy.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 with open('utils/db_credentials.json', 'r') as archivo:
-        db_credentials = json.load(archivo)
+     db_credentials = json.load(archivo)
 
 DATABASES = {
-    'default': {
+    
+  'default': {
         'ENGINE'   : 'django.db.backends.postgresql_psycopg2',
         'NAME'     : db_credentials["db_name"],
         'USER'     : db_credentials["db_user"],

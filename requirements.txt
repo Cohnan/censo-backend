@@ -1,4 +1,5 @@
 Django
 djangorestframework
 djangorestframework-simplejwt
+numpy
 psycopg2-binary
