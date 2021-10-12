@@ -14,16 +14,23 @@ from ..serializers import UserSerializer
 
 
 class UsuarioLista(APIView):
-    # Para verificar antes de cada método que estos permiso (está autenticado) se tiene
+    '''
+    Vista para la administracion de Usuarios, de parte de un usuario administrador
+    '''
+    # Para verificar antes de cada método que estos permiso (IsAuthenticated) se tiene
     # (y así no tener que hacer manualmente la verificación de que haya un Bearer token)
     # Y que la columna is_staff sea true (IsAdminUser)
     permission_classes = (IsAuthenticated, IsAdminUser)
+
     def get(self, request):
+        '''
+        Traer lista de usuarios
+        '''
 
         # Extraer el token el "Bearer <token>"
         token = request.META.get('HTTP_AUTHORIZATION')[7:]
         
-        #print(f"\n\n UsuarioLista|get|request.META.get('HTTP_AUTHORIZATION'):\n{request.META.get('HTTP_AUTHORIZATION')} \n\n")
+        print(f"\n\n UsuarioLista|get|request.META.get('HTTP_AUTHORIZATION'):\n{request.META.get('HTTP_AUTHORIZATION')} \n\n")
 
         token_backend = TokenBackend(algorithm=settings.SIMPLE_JWT['ALGORITHM']) # Setup parser
         
@@ -39,24 +46,24 @@ class UsuarioLista(APIView):
 
         print(f"\n\n UsuarioLista|get|usuario_serializer.data:\n{usuario_serializer.data} \n\n")
 
-        # # Verificar que el usuario tiene permisos de hacer el get, i.e. es administrador
-        # if not usuario_serializer.data["is_admin"]:
-        #     return Response({"detail": "Debe ser superusuario para acceder a la lista de usuarios"}, status = status.HTTP_401_UNAUTHORIZED)
-
         # Devolver lista de usuarios
         lista_usuarios = Usuario.objects.all()
         serializer = UserSerializer(lista_usuarios, many = True)
+
         return Response(serializer.data)
 
     def post(self, request, format = None):
+        '''
+        Crear nuevo usuario
+        '''
+
         print("\n\nUser View | post | request.data\n")
         print(request.data)
 
-
-        serializer = UserSerializer(data = request.data)
+        serializer = UserSerializer(data = request.data) # Realiza validacion, para solo hacer uso de atributos en la Metadata del UserSerializer
 
         if serializer.is_valid():
-            serializer.save()
+            serializer.save() # Guardar en base de datos
             return Response(serializer.data, status = status.HTTP_201_CREATED)
 
         return Response({"detail": "No se pudo crear el usuario", "errors": serializer.errors}, status = status.HTTP_400_BAD_REQUEST)
