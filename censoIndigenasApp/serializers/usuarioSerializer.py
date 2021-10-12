@@ -4,7 +4,7 @@ from rest_framework                               import serializers
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model  = usuario.Usuario
-        fields = ['id', 'username', 'password', 'name', 'email',]
+        fields = ['id', 'password', 'nombre', 'email',]
     def create(self, validated_data):
         userInstance = usuario.Usuario.objects.create(**validated_data)
         return userInstance
@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     def to_representation(self, obj):
         user   = usuario.Usuario.objects.get(id=obj.id)
         return {
-            "username" : user.username,
-            "name" : user.name,
+           
+            "nombre" : user.nombre,
             "email" : user.email,
         }
