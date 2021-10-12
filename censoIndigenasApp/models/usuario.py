@@ -7,13 +7,13 @@ from django.contrib.auth.hashers import make_password
 from django.core.validators import MinLengthValidator
 
 class UsuarioManager(BaseUserManager):
-    def create_user(self, email, password, nombre, es_admin = False):
+    def create_user(self, email, password, nombre, is_staff = False):
         # if not email or not password:
         #     raise ValueError('Los Usuarios deben tener Email y Contraseña')
 
         # Si en la peticion de registro se indico que el usuario fuera admin, hacer uso del 
         # metodo creado para eso
-        if es_admin:
+        if is_staff:
             return self.create_superuser(email = email, password = password, nombre = nombre)
 
         # Usando super clase, poniendo ojala todos los atributos heredados necesarios
@@ -41,7 +41,7 @@ class UsuarioManager(BaseUserManager):
         )
 
         # Cambiar a True la propiedad de que es admin
-        usuario.es_admin = True
+        usuario.is_staff = True
         
         # Guardar en base de datos
         usuario.save(using = self._db) 
@@ -54,7 +54,7 @@ class Usuario(AbstractBaseUser):
     password = models.CharField(verbose_name = "Contraseña", max_length = 256)
     nombre = models.CharField(verbose_name = 'Nombre', max_length = 50, blank = False, validators=[MinLengthValidator(4)])
     # Propiedad para saber si el usuario tiene derecho de crear nuevos usuarios
-    es_admin = models.BooleanField(verbose_name = "Es Administrador", default = False)
+    is_staff = models.BooleanField(verbose_name = "Es Administrador", default = False)
 
     objects = UsuarioManager()
 

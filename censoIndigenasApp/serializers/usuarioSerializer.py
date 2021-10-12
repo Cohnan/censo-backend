@@ -4,7 +4,7 @@ from rest_framework                               import serializers
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model  = usuario.Usuario
-        fields = ['id', 'password', 'nombre', 'email', 'es_admin']
+        fields = ['id', 'password', 'nombre', 'email', 'is_staff']
 
     def create(self, validated_data):
         userInstance = usuario.Usuario.objects.create_user(**validated_data)
@@ -15,5 +15,5 @@ class UserSerializer(serializers.ModelSerializer):
         return {
             "nombre" : user.nombre,
             "email" : user.email,
-            "administrador": user.es_admin
+            "administrador": user.is_staff
         }
