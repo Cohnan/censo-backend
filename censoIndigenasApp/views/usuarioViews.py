@@ -109,6 +109,17 @@ class UsuarioPersonalizado(APIView):
     '''
     View para gestion de informacion propia
     '''
+    permission_classes = (IsAuthenticated,)
+    
+    def get_object(self, id):
+        '''
+        Extraer modelo de usuario identificado por id dado
+        '''
+        try:
+            return Usuario.objects.get(id=id) # Query SELECT * WHERE id=id
+        except Usuario.DoesNotExist:
+            raise Http404
+
     def extraer_info_loggeado(self, request):
         '''
         Clase ayudante para extraer info del usuario que hace la peticion
@@ -130,14 +141,39 @@ class UsuarioPersonalizado(APIView):
         return id_usuario_token, usuario_serializer.data # Serializado del usuario duenio del token (producto de to_representation)
 
     def get(self, request):
-        id_us_log, data_us_log = self.extraer_info_loggeado(request)
+        '''
+        Tramitar peticion de Actualizacion de usuario autenticado
+        '''
+        id_us_log, _ = self.extraer_info_loggeado(request)
 
-        # Terminar peticion si no se es administrador, o si no se es el usuario de quien se pide la info
+        # Traer informacion pedida
+        usuario = self.get_object(id_us_log)
+        serializer = UserSerializer(usuario)
+
+        return Response(serializer.data)
         
-        pass
 
     def put(self, request):
-        pass
+        '''
+        Tramitar peticion de Actualizacion de usuario autenticado
+        '''
+        id_us_log, _ = self.extraer_info_loggeado(request)
+
+        usuario = self.get_object(id_us_log)
+        serializer = UserSerializer(usuario, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
-        pass
+        '''
+        Tramitar peticion de Eliminacion de usuario identificado por id dado
+        '''
+        id_us_log, _ = self.extraer_info_loggeado(request)
+
+        usuario = self.get_object(id_us_log)
+        usuario.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
