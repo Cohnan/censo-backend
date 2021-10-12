@@ -14,7 +14,7 @@ from ..serializers import UserSerializer
 
 
 
-class UsuarioLista(APIView):
+class UsuarioListaView(APIView):
     '''
     Vista para la administracion de Usuarios, de parte de un usuario administrador
     '''
@@ -46,7 +46,7 @@ class UsuarioLista(APIView):
 
         return Response({"detail": "No se pudo crear el usuario", "errors": serializer.errors}, status = status.HTTP_400_BAD_REQUEST)
 
-class UsuarioDetalle(APIView):
+class UsuarioDetalleView(APIView):
     '''
     Gestionar a un usuario
     '''
@@ -95,7 +95,7 @@ class UsuarioDetalle(APIView):
         usuario.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class UsuarioPersonalizado(APIView):
+class UsuarioPersonalizadoView(APIView):
     '''
     View para gestion de informacion propia
     '''
