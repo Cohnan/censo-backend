@@ -10,9 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
         return userInstance
 
     def to_representation(self, obj):
-        user   = usuario.Usuario.objects.get(id=obj.id)
+        user   = usuario.Usuario.objects.get(id = obj.id)
         return {
-           
             "name" : user.name,
             "email" : user.email,
         }
