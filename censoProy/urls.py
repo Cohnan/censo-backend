@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from censoIndigenasApp.views import UsuarioLista, UsuarioDetalle
+from censoIndigenasApp.views import UsuarioLista, UsuarioDetalle, UsuarioPersonalizado
 
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
 
@@ -23,8 +23,11 @@ from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshVie
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('censoIndigena/', include('censoIndigenasApp.urls')),
-    path('usuarios/', UsuarioLista.as_view()),
-    path('usuarios/<int:id_usuario>', UsuarioDetalle.as_view()),
+
+    path('usuarios/', UsuarioLista.as_view()),                          # Ver y crear usuarios
+    path('usuarios/<int:id_usuario_url>', UsuarioDetalle.as_view()),    # _RUD usuario especificado
+    path('perfil/', UsuarioPersonalizado.as_view()),                    # _RUD usuario autenticado
+
     path('login/', TokenObtainPairView.as_view()),
     path('refresh/', TokenRefreshView.as_view()),
 ]
