@@ -18,22 +18,15 @@ class UsuarioLista(APIView):
     '''
     Vista para la administracion de Usuarios, de parte de un usuario administrador
     '''
-    # Para verificar antes de cada método que se tiene el permiso IsAuthenticated
-    # (y así no tener que hacer manualmente la verificación de que haya un Bearer token (código comentado en get),
-    # y de que éste esté vigente )
-    # Y que la columna is_staff sea true (IsAdminUser)
+    # Verifica antes de cada método que:
+    # - IsAuthenticated: se aporto un token de acceso, y éste está vigente
+    # - IsAdminUser: que es usuario administrador, es decir, que la columna is_staff sea True
     permission_classes = (IsAuthenticated, IsAdminUser)
 
     def get(self, request):
         '''
         Traer lista de usuarios
         '''
-        # # Extraer el "Bearer <token>"
-        # try :
-        #     token = request.META.get('HTTP_AUTHORIZATION')[7:]
-        # except:
-        #     return Response({"detail": "Se necesita proveer un Bearer Token para autenticacion."}, status = status.HTTP_401_UNAUTHORIZED)
-
         # Devolver lista de usuarios
         lista_usuarios = Usuario.objects.all()
         serializer = UserSerializer(lista_usuarios, many = True) # Lista de Jsons con la informacion de cada uno
@@ -57,12 +50,9 @@ class UsuarioDetalle(APIView):
     '''
     Gestionar a un usuario
     '''
-
-    # Antes de cada metodo: verificar que se esta proveyendo token en la HTTP Request
-    # En este caso: 
-    # - que hay un token y esta vigente
-    # - que se sea usuario administrador (i.e. columna is_staff es True)
-
+    # Verifica antes de cada método que:
+    # - IsAuthenticated: se aporto un token de acceso, y éste está vigente
+    # - IsAdminUser: que es usuario administrador, es decir, que la columna is_staff sea True
     permission_classes = (IsAuthenticated, IsAdminUser)
 
     def get_object(self, id):
@@ -109,8 +99,10 @@ class UsuarioPersonalizado(APIView):
     '''
     View para gestion de informacion propia
     '''
+    # Verifica antes de cada método que:
+    # - IsAuthenticated: se aporto un token de acceso, y éste está vigente
     permission_classes = (IsAuthenticated,)
-    
+
     def get_object(self, id):
         '''
         Extraer modelo de usuario identificado por id dado
