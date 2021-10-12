@@ -34,8 +34,6 @@ class UsuarioLista(APIView):
         #     token = request.META.get('HTTP_AUTHORIZATION')[7:]
         # except:
         #     return Response({"detail": "Se necesita proveer un Bearer Token para autenticacion."}, status = status.HTTP_401_UNAUTHORIZED)
-        
-        # print(f"\n\n UsuarioLista|get|request.META.get('HTTP_AUTHORIZATION'):\n{request.META.get('HTTP_AUTHORIZATION')} \n\n")
 
         # Devolver lista de usuarios
         lista_usuarios = Usuario.objects.all()
@@ -48,10 +46,8 @@ class UsuarioLista(APIView):
         Crear nuevo usuario
         '''
 
-        print("\n\nUser View | post | request.data\n")
-        print(request.data)
-
-        serializer = UserSerializer(data = request.data) # Realiza validacion, para solo hacer uso de atributos en la Metadata del UserSerializer
+        # request.data: Cuerpo completo de la peticion HTTP
+        serializer = UserSerializer(data = request.data) # Conserva solo los atributos en la Metadata del UserSerializer -> validated_data, usado en creates del serializador
 
         if serializer.is_valid():
             serializer.save() # Guardar en base de datos
