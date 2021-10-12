@@ -28,7 +28,6 @@ class UsuarioLista(APIView):
         '''
         Traer lista de usuarios
         '''
-
         # # Extraer el "Bearer <token>"
         # try :
         #     token = request.META.get('HTTP_AUTHORIZATION')[7:]
@@ -45,7 +44,6 @@ class UsuarioLista(APIView):
         '''
         Crear nuevo usuario
         '''
-
         # request.data: Cuerpo completo de la peticion HTTP
         serializer = UserSerializer(data = request.data) # Conserva solo los atributos en la Metadata del UserSerializer -> validated_data, usado en creates del serializador
 
@@ -61,9 +59,56 @@ class UsuarioDetalle(APIView):
     '''
 
     # Antes de cada metodo: verificar que se esta proveyendo token en la HTTP Request
-    # En este caso: que hay un token y esta vigente
-    permission_classes = (IsAuthenticated,)
+    # En este caso: 
+    # - que hay un token y esta vigente
+    # - que se sea usuario administrador (i.e. columna is_staff es True)
 
+    permission_classes = (IsAuthenticated, IsAdminUser)
+
+    def get_object(self, id):
+        '''
+        Extraer modelo de usuario identificado por id dado
+        '''
+        try:
+            return Usuario.objects.get(id=id) # Query SELECT * WHERE id=id
+        except Usuario.DoesNotExist:
+            raise Http404
+
+    def get(self, request, id_usuario_url, format=None):
+        '''
+        Tramitar peticion de Retorno de usuario identificado por id dado
+        '''
+        # Traer informacion pedida
+        usuario = self.get_object(id_usuario_url)
+        serializer = UserSerializer(usuario)
+
+        return Response(serializer.data)
+
+    def put(self, request, id_usuario_url, format=None):
+        '''
+        Tramitar peticion de Actualizacion de usuario identificado por id dado
+        '''
+        usuario = self.get_object(id_usuario_url)
+        serializer = UserSerializer(usuario, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id_usuario_url, format=None):
+        '''
+        Tramitar peticion de Eliminacion de usuario identificado por id dado
+        '''
+        usuario = self.get_object(id_usuario_url)
+        usuario.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class UsuarioPersonalizado(APIView):
+    '''
+    View para gestion de informacion propia
+    '''
     def extraer_info_loggeado(self, request):
         '''
         Clase ayudante para extraer info del usuario que hace la peticion
@@ -84,36 +129,15 @@ class UsuarioDetalle(APIView):
 
         return id_usuario_token, usuario_serializer.data # Serializado del usuario duenio del token (producto de to_representation)
 
-    def get_object(id):
-        '''
-        Extraer modelo de usuario identificado por id dado
-        '''
+    def get(self, request):
+        id_us_log, data_us_log = self.extraer_info_loggeado(request)
 
+        # Terminar peticion si no se es administrador, o si no se es el usuario de quien se pide la info
         
+        pass
 
-        try:
-            return Usuario.objects.get(id=id) # Query SELECT * WHERE id=id
-        except Usuario.DoesNotExist:
-            raise Http404
+    def put(self, request):
+        pass
 
-    def get(self, request, id, format=None):
-        '''
-        Tramitar peticion de Retorno de usuario identificado por id dado
-        '''
-
-        
-        usuario = self.get_object(id)
-        serializer = UserSerializer(usuario)
-        return Response(serializer.data)
-
-    def put(self, request, id, format=None):
-        '''
-        Tramitar peticion de Actualizacion de usuario identificado por id dado
-        '''
-        pass 
-
-    def delete(self, request, id, format=None):
-        '''
-        Tramitar peticion de Eliminacion de usuario identificado por id dado
-        '''
-
+    def delete(self, request):
+        pass
