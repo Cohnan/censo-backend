@@ -11,7 +11,7 @@ from ..models import Persona
 from ..serializers import PersonaSerializer
 
 class PersonaList(APIView):
-    permission_classes = (IsAuthenticated , IsAdminUser )
+    permission_classes = (IsAuthenticated )
     def get(self, request):
         lista_personas = Persona.objects.all()
         serializer = PersonaSerializer(lista_personas, many = True)
@@ -25,7 +25,7 @@ class PersonaList(APIView):
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 class PersonaDetail(APIView):
-    permission_classes = (IsAuthenticated , IsAdminUser )
+    permission_classes = (IsAuthenticated  )
     def get_object(self, id):
         try:
             return Persona.objects.get(id=id) # Query SELECT * WHERE id=id
