@@ -29,7 +29,7 @@ class UsuarioLista(APIView):
         Traer lista de usuarios
         '''
 
-        # # Extraer el token el "Bearer <token>"
+        # # Extraer el "Bearer <token>"
         # try :
         #     token = request.META.get('HTTP_AUTHORIZATION')[7:]
         # except:
@@ -61,12 +61,36 @@ class UsuarioDetalle(APIView):
     '''
 
     # Antes de cada metodo: verificar que se esta proveyendo token en la HTTP Request
+    # En este caso: que hay un token y esta vigente
     permission_classes = (IsAuthenticated,)
 
-    def get_object(self, id):
+    def extraer_info_loggeado(self, request):
+        '''
+        Clase ayudante para extraer info del usuario que hace la peticion
+        '''
+
+        # Extraer el "Bearer <token>"
+        token = request.META.get('HTTP_AUTHORIZATION')[7:]
+        
+        # Extraer id del usuario duenio del token
+        token_backend = TokenBackend(algorithm=settings.SIMPLE_JWT['ALGORITHM']) # Setup parser
+        info_token    = token_backend.decode(token, verify=False) # Que hace el verify?
+        # info_token: metadata del token, que del usuario incluye (por defecto) solo el identificador unico del usuario creador en la llave user_id (ese nombre se configura en settings)
+
+        # Extraer informacion de usuario duenio del token
+        id_usuario_token = info_token["user_id"]
+        usuario = self.get_object(id = id_usuario_token)
+        usuario_serializer = UserSerializer(usuario)
+
+        return id_usuario_token, usuario_serializer.data # Serializado del usuario duenio del token (producto de to_representation)
+
+    def get_object(id):
         '''
         Extraer modelo de usuario identificado por id dado
         '''
+
+        
+
         try:
             return Usuario.objects.get(id=id) # Query SELECT * WHERE id=id
         except Usuario.DoesNotExist:
@@ -77,7 +101,7 @@ class UsuarioDetalle(APIView):
         Tramitar peticion de Retorno de usuario identificado por id dado
         '''
 
-        # 
+        
         usuario = self.get_object(id)
         serializer = UserSerializer(usuario)
         return Response(serializer.data)
