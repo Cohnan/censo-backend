@@ -34,12 +34,15 @@ class UsuarioLista(APIView):
         return Response(serializer.data)
 
     def post(self, request, format = None):
-        print("\n\nUser View | post | request.data\n")
-        print(request.data)
+        # Crear serializador a partir de lo que contiene el cuerpo de la HTTP request 
+        # (solo van a llegar al serializador los datos considerados en la Metadata del serializador)
         serializer = UserSerializer(data = request.data)
 
         if serializer.is_valid():
+            # Guardar en base de datos
             serializer.save()
+            # Devolver una HTTP request, que ademas contenga los datos del usuario creado
+            # PERO solo conteniendo los datos indicados en el metodo to_representation del serializador
             return Response(serializer.data, status = status.HTTP_201_CREATED)
 
         return Response({"detail": "No se pudo crear el usuario", "errors": serializer.errors}, status = status.HTTP_400_BAD_REQUEST)
