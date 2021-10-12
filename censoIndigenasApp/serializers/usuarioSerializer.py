@@ -6,7 +6,7 @@ class UserSerializer(serializers.ModelSerializer):
         model  = usuario.Usuario
         fields = ['id', 'password', 'nombre', 'email',]
     def create(self, validated_data):
-        userInstance = usuario.Usuario.objects.create_user(**validated_data)
+        userInstance = usuario.Usuario.objects.create(**validated_data)
         return userInstance
 
     def to_representation(self, obj):
