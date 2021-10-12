@@ -44,15 +44,15 @@ INSTALLED_APPS = [
     'censoIndigenasApp',
 ]
 
-SIMPLE_JWT = { # Diccionario de config de los tokens
+SIMPLE_JWT = { # Alguna configuracion para los tokens a usar para autorizacion
     'ACCESS_TOKEN_LIFETIME'     : timedelta(minutes = 10),
     'REFRESH_TOKEN_LIFETIME'    : timedelta(days = 1),
-    'ROTATE_REFRESH_TOKENS'     : False,
-    'BLACKLIST_AFTER_ROTATION'  : True,
-    'UPDATE_LAST_LOGIN'         : False,
+    'ROTATE_REFRESH_TOKENS'     : False,  # Si se debe devolver un nuevo Refresh Token al hacer uso de un Refresh Token
+    'BLACKLIST_AFTER_ROTATION'  : False,  # Si un Refresh Token utilizado debe mandarse a la lista negra (necesita de app de lista negra instalada)
+    'UPDATE_LAST_LOGIN'         : True,   # Actualizar campo de Last time logged in de la tabla User
     'ALGORITHM'                 : 'HS256',
-    'USER_ID_FIELD'             : 'id',
-    'USER_ID_CLAIM'             : 'user_id',
+    'USER_ID_FIELD'             : 'id', # Campo de la tabla User a usar como identificador
+    'USER_ID_CLAIM'             : 'user_id', # Forma de referirse a este identificador unico en la metadata del token
 }
 
 MIDDLEWARE = [
@@ -70,7 +70,7 @@ REST_FRAMEWORK = { # En settings.py del proyecto
         'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication', # Usaremos tokens de JWT
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # Usaremos Tokens de JWT
     )
 }
 
