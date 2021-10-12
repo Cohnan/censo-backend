@@ -1,1 +1,2 @@
 from .personaSerializer import PersonaSerializer
+from .usuarioSerializer import UserSerializer
