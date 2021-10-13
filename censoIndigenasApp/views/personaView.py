@@ -30,7 +30,7 @@ class PersonaCrearView(APIView):
     Procesa las peticiones que se hagan en el endpoint censoIndigena/personas/censar/
     '''
     # Permitir para cualquier persona
-    permissions_classes = (AllowAny, )
+    permission_classes = (AllowAny, )
 
     def post(self, request, format=None):
         '''
