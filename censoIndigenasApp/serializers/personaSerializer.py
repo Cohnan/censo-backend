@@ -6,7 +6,7 @@ from ..models       import Persona, Ocupacion, Etnia, Resguardo
 class PersonaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Persona
-        fields = ["id" , "tipo_doc" , "doc_id" , "id_ocupacion" , "nombre" , "fechadenacimiento" , "id_resguardo" , "id_etnia" , "departamento"]
+        fields = ["tipo_doc" , "doc_id" , "id_ocupacion" , "nombre" , "fechadenacimiento" , "id_resguardo" , "id_etnia" , "departamento"]
 
     def create(self, validated_data):
         personaInstance = Persona.objects.create(**validated_data)
@@ -19,7 +19,6 @@ class PersonaSerializer(serializers.ModelSerializer):
         resguardo = obj.id_resguardo    #Instancia del tipo Resguardo
 
         return {
-            "id"                : persona.id,
             "tipo_doc"          : persona.tipo_doc,
             "doc_id"            : persona.doc_id,
             "nombre"            : persona.nombre,

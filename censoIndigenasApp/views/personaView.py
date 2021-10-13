@@ -23,7 +23,7 @@ class PersonaList(APIView):
         '''
         lista_personas = Persona.objects.all()
         serializer = PersonaSerializer(lista_personas, many = True)
-        return Response(serializer.data)
+        return Response(serializer.data, status = status.HTTP_200_OK)
 
 class PersonaCrearView(APIView):
     '''
@@ -39,7 +39,11 @@ class PersonaCrearView(APIView):
         serializer = PersonaSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
+            return Response({
+            "detail": "Persona registrada exitosamente.", 
+            "registro": serializer.data
+            }, status = status.HTTP_201_CREATED)
+            
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 
