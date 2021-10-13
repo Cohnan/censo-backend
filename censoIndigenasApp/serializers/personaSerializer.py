@@ -1,11 +1,21 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 from ..models       import Persona, Ocupacion, Etnia, Resguardo
 
 
 class PersonaSerializer(serializers.ModelSerializer):
     class Meta:
+        # Variables que va a procesar el serialziador al llegar un json
         model = Persona
         fields = ["tipo_doc" , "doc_id" , "id_ocupacion" , "nombre" , "fechadenacimiento" , "id_resguardo" , "id_etnia" , "departamento"]
+
+        # Validar 
+        validators = [
+            UniqueTogetherValidator(
+                queryset = Persona.objects.all(),
+                fields = ['tipo_doc', 'doc_id']
+            )
+        ]
 
     def create(self, validated_data):
         personaInstance = Persona.objects.create(**validated_data)
