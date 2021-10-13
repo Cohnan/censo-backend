@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models       import Persona
+from ..models       import Persona, Ocupacion, Etnia, Resguardo
 
 
 class PersonaSerializer(serializers.ModelSerializer):
@@ -14,14 +14,18 @@ class PersonaSerializer(serializers.ModelSerializer):
 
     def to_representation(self, obj):
         persona   = Persona.objects.get(id=obj.id)
+        ocupacion = obj.id_ocupacion    # Es una instancia del tipo Ocupacion
+        etnia = obj.id_etnia            # Instancia del tipo Etnia
+        resguardo = obj.id_resguardo    #Instancia del tipo Resguardo
+
         return {
-            "id"               : persona.id,
-            "tipo_doc"         : persona.tipo_doc,
-            "doc_id"           : persona.doc_id,
-            "id_ocupacion"     : persona.id_ocupacion,
-            "nombre"           : persona.nombre,
-            "fechadenacimiento": persona.fechadenacimiento,
-            "id_resguardo"     : persona.id_resguardo,
-            "id_etnia"         : persona.id_etnia,
-            "departamento"     : persona.departamento
+            "id"                : persona.id,
+            "tipo_doc"          : persona.tipo_doc,
+            "doc_id"            : persona.doc_id,
+            "nombre"            : persona.nombre,
+            "fechadenacimiento" : persona.fechadenacimiento,
+            "ocupacion"         : ocupacion.nombre,
+            "etnia"             : etnia.nombre,
+            "resguardo"         : resguardo.nombre,
+            "departamento"      : persona.departamento
         }
