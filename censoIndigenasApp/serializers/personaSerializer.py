@@ -1,8 +1,4 @@
 from rest_framework import serializers
-<<<<<<< HEAD
-=======
-
->>>>>>> d66dd5aa77c010a44f8480231455925faad290b4
 from ..models       import Persona
 
 
