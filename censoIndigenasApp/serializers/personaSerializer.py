@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from back.censoIndigenasApp.models import persona;
 from ..models       import Persona
 
 
