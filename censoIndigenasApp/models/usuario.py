@@ -64,8 +64,10 @@ class Usuario(AbstractBaseUser):
     # Estos son los atributos los pedirá django al momento de decirle createsuperuser
     REQUIRED_FIELDS = ['nombre']
 
+    # Metodo que se llama para guardar el usuario en la DB
     # Solo se debe hacer una encriptacion de la contrasena, y la estamos haciendo en el UserManager
     # def save(self, **kwargs):
     #     sal = 'condimento'
     #     self.password = make_password(self.password, sal)
     #     super().save(**kwargs)
+

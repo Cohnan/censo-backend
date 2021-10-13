@@ -34,6 +34,7 @@ class UsuarioListaView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format = None):
+
         '''
         Crear nuevo usuario
         '''
