@@ -6,3 +6,4 @@ class OcupacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ocupacion
         fields = "__all__"
+

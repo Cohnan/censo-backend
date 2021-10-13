@@ -1,7 +1,6 @@
 from django.db import models
 from censoIndigenasApp.models.etnia import Etnia
 from censoIndigenasApp.models.ocupacion import Ocupacion
-
 from censoIndigenasApp.models.resguardo import Resguardo
 
 
