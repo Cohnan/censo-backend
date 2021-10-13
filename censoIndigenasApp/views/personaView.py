@@ -10,7 +10,7 @@ from rest_framework import status
 from ..models import Persona
 from ..serializers import PersonaSerializer
 
-class PersonaList(APIView):
+class PersonaListaView(APIView):
     '''
     Procesa las peticiones que se hagan en el endpoint censoIndigena/personas/
     '''
@@ -44,10 +44,12 @@ class PersonaCrearView(APIView):
             "registro": serializer.data
             }, status = status.HTTP_201_CREATED)
             
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+        return Response({
+            "errors": serializer.errors
+            }, status = status.HTTP_400_BAD_REQUEST)
 
 
-class PersonaDetail(APIView):
+class PersonaDetailView(APIView):
     '''
     Procesa las peticiones que se hagan en el endpoint censoIndigena/personas/<id>
     '''
@@ -76,8 +78,14 @@ class PersonaDetail(APIView):
         serializer = PersonaSerializer(persona, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                "detail": "Persona actualizada exitosamente.",
+                "registro": serializer.data
+                })
+
+        return Response({
+            "errors": serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id, format=None):
         '''
@@ -85,6 +93,6 @@ class PersonaDetail(APIView):
         '''
         persona = self.get_object(id)
         persona.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-    
+        return Response({
+            "detail": "Persona eliminada exitosamente."
+        }, status=status.HTTP_204_NO_CONTENT)
