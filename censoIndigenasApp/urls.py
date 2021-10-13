@@ -6,5 +6,5 @@ from .views import PersonaCrearView
 urlpatterns = [
     path('personas/', PersonaList.as_view()),
     path('personas/<int:id>', PersonaDetail.as_view()),
-    path('personas/censar/', PersonaCrearView.as_view())
+    path('censar/', PersonaCrearView.as_view())
 ]
