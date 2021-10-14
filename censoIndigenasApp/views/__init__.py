@@ -6,12 +6,12 @@ from .usuarioViews import UsuarioListaView
 from .usuarioViews import UsuarioPersonalizadoView
 from censoIndigenasApp.views import UsuarioListaView, UsuarioDetalleView, UsuarioPersonalizadoView
 from censoIndigenasApp import views as censo_views
-from .ocupacionview import OcupacionList
-from .ocupacionview import OcupacionDetail
-#from .ocupacionview import OcupacionCrearView
-from .etniaview import EtniaList
-from .etniaview import etniaDetail  #E
-#from .etniaview import EtniaCrearView
-from .resguardoview import ResguardoList
-from .resguardoview import resguardoDetail #R
-#from .resguardoview import ResguardoCrearView
+from .ocupacionview import OcupacionListaView
+from .ocupacionview import OcupacionDetailView
+from .ocupacionview import OcupacionCrearView
+from .etniaview import EtniaListaView
+from .etniaview import EtniaDetailView 
+from .etniaview import EtniaCrearView
+from .resguardoview import ResguardoListaView
+from .resguardoview import ResguardoDetailView
+from .resguardoview import ResguardoCrearView
