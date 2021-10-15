@@ -33,7 +33,7 @@ urlpatterns = [
 
     path('ocupaciones/', censo_views.OcupacionListaView.as_view()),
     path('ocupaciones/<int:id_ocupacion_url>', censo_views.OcupacionDetailView.as_view()),
-    #path('ocupaciones/agregar/', censo_views.OcupacionCrearView.as_view()),
+    path('ocupaciones/agregar/', censo_views.OcupacionCrearView.as_view()),
 
     path('etnias/', censo_views.EtniaListaView.as_view()),
     path('enias/<int:id_etnia_url>', censo_views.EtniaDetailView.as_view()),
