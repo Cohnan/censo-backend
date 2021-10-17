@@ -28,8 +28,14 @@ SECRET_KEY = 'django-insecure-c#&_rlisqx$ko#2ckoga_98dy4yigzu*ib=*2ume5w4@11q)9h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost"]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080", 
+    "http://localhost:8081",
+    "http://localhost:8082"
+    ]
+# CORS_ALLOW_ALL_HOST = True
 
 # Application definition
 
@@ -42,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'censoIndigenasApp',
+    'corsheaders'
 ]
 
 SIMPLE_JWT = { # Alguna configuracion para los tokens a usar para autorizacion
@@ -63,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 REST_FRAMEWORK = { # En settings.py del proyecto
