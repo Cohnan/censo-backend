@@ -5,4 +5,4 @@ class EtniaSerializer(serializers.ModelSerializer):
     # Los unicos campos que puede recibir el serializador para crear una instancia del modelo
     class Meta:
         model = Etnia
-        fields = ("id_Etnia", "nombre", "descripcion")
+        fields = ("id_etnia", "nombre", "descripcion")

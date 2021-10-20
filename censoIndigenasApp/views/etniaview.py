@@ -13,7 +13,7 @@ class EtniaListaView(APIView):
     Procesa las peticiones que se hagan en el endpoint etnias/
     '''
     # Solo permitir el procesamiento de estas peticiones a quienes han iniciado sesion
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (AllowAny, )
 
     def get(self, request):
         '''
