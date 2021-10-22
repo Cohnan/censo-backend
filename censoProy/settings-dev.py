@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta # Para darle tiempo de vida a los tokens
 
+import django_heroku # Para configuracion automática de alguna configuración para Heroku (e.g. Statics)
+
 import json # Para leer archivo json de credenciales de DB
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,8 +30,15 @@ SECRET_KEY = 'django-insecure-c#&_rlisqx$ko#2ckoga_98dy4yigzu*ib=*2ume5w4@11q)9h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "https://censoindigena.herokuapp.com"]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080", 
+    "http://localhost:8081",
+    "http://localhost:8082",
+    "https://censofront.herokuapp.com"
+    ]
+# CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -42,17 +51,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'censoIndigenasApp',
+    'corsheaders',
 ]
 
-SIMPLE_JWT = { # Diccionario de config de los tokens
+SIMPLE_JWT = { # Alguna configuracion para los tokens a usar para autorizacion
     'ACCESS_TOKEN_LIFETIME'     : timedelta(minutes = 10),
     'REFRESH_TOKEN_LIFETIME'    : timedelta(days = 1),
-    'ROTATE_REFRESH_TOKENS'     : False,
-    'BLACKLIST_AFTER_ROTATION'  : True,
-    'UPDATE_LAST_LOGIN'         : False,
+    'ROTATE_REFRESH_TOKENS'     : False,  # Si se debe devolver un nuevo Refresh Token al hacer uso de un Refresh Token
+    'BLACKLIST_AFTER_ROTATION'  : False,  # Si un Refresh Token utilizado debe mandarse a la lista negra (necesita de app de lista negra instalada)
+    'UPDATE_LAST_LOGIN'         : True,   # Actualizar campo de Last time logged in de la tabla User
     'ALGORITHM'                 : 'HS256',
-    'USER_ID_FIELD'             : 'id',
-    'USER_ID_CLAIM'             : 'user_id',
+    'USER_ID_FIELD'             : 'id', # Campo de la tabla User a usar como identificador
+    'USER_ID_CLAIM'             : 'user_id', # Forma de referirse a este identificador unico en la metadata del token
 }
 
 MIDDLEWARE = [
@@ -63,14 +73,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 REST_FRAMEWORK = { # En settings.py del proyecto
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAdminUser'
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication', # Usaremos tokens de JWT
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # Usaremos Tokens de JWT
     )
 }
 
@@ -158,3 +171,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_heroku.settings(locals())

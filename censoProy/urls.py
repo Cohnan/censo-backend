@@ -15,8 +15,35 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from censoIndigenasApp.views import UsuarioListaView, UsuarioDetalleView, UsuarioPersonalizadoView
+
+from censoIndigenasApp.views import UsuarioListaView, UsuarioDetalleView, UsuarioPersonalizadoView
+from censoIndigenasApp import views as censo_views
+
+from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('censoIndigena/', include('censoIndigenasApp.urls'))
+    path('censoIndigena/', include('censoIndigenasApp.urls')),
+
+    path('usuarios/', UsuarioListaView.as_view()),                          # Ver y crear usuarios
+    path('usuarios/<int:id_usuario_url>', UsuarioDetalleView.as_view()),    # _RUD usuario especificado
+    path('perfil/', UsuarioPersonalizadoView.as_view()),                    # _RUD usuario autenticado
+
+    path('ocupaciones/', censo_views.OcupacionListaView.as_view()),
+    path('ocupaciones/<int:id_ocupacion_url>', censo_views.OcupacionDetailView.as_view()),
+    path('ocupaciones/agregar/', censo_views.OcupacionCrearView.as_view()),
+
+    path('etnias/', censo_views.EtniaListaView.as_view()),
+    path('enias/<int:id_etnia_url>', censo_views.EtniaDetailView.as_view()),
+    path('etnias/agregar/', censo_views.EtniaCrearView.as_view()),
+
+    path('resguardos/', censo_views.ResguardoListaView.as_view()),
+    path('resguardos/<int:id_etnia_url>', censo_views.ResguardoDetailView.as_view()),
+    path('resguardos/agregar/', censo_views.ResguardoCrearView.as_view()),
+
+
+    path('login/', TokenObtainPairView.as_view()),
+    path('refresh/', TokenRefreshView.as_view()),
 ]
