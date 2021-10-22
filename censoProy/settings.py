@@ -30,12 +30,13 @@ SECRET_KEY = 'django-insecure-c#&_rlisqx$ko#2ckoga_98dy4yigzu*ib=*2ume5w4@11q)9h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "https://censoindigena.herokuapp.com"]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080", 
     "http://localhost:8081",
-    "http://localhost:8082"
+    "http://localhost:8082",
+    "https://censofront.herokuapp.com"
     ]
 # CORS_ALLOW_ALL_ORIGINS = True
 
