@@ -32,13 +32,13 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "https://censoindigena.herokuapp.com"]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080", 
-    "http://localhost:8081",
-    "http://localhost:8082",
-    "https://censofront.herokuapp.com"
-    ]
-# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = [
+    # "http://localhost:8080", 
+    # "http://localhost:8081",
+    # "http://localhost:8082",
+    # "https://censofront.herokuapp.com"
+    # ]
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
