@@ -56,23 +56,23 @@ class ResguardoDetailView(APIView):
 
     def get_object(self, id):
         try:
-            return Resguardo.objects.get(id=id) # Query SELECT * WHERE id=id
+            return Resguardo.objects.get(id_resguardo=id) # Query SELECT * WHERE id=id
         except Resguardo.DoesNotExist:
             raise Http404
 
-    def get(self, request, id, format=None):
+    def get(self, request, id_resguardo_url, format=None):
         '''
         Permite traer detalles de resguardo identificada con el id dado
         '''
-        resguardo = self.get_object(id)
+        resguardo = self.get_object(id_resguardo_url)
         serializer = ResguardoSerializer(resguardo)
         return Response(serializer.data)
 
-    def put(self, request, id, format=None):
+    def put(self, request, id_resguardo_url, format=None):
         '''
         Permite actualizar detalles de resguardo identificada con el id dado
         '''
-        resguardo = self.get_object(id)
+        resguardo = self.get_object(id_resguardo_url)
         serializer = ResguardoSerializer(resguardo, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -85,11 +85,11 @@ class ResguardoDetailView(APIView):
             "errors": serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, id, format=None):
+    def delete(self, request, id_resguardo_url, format=None):
         '''
         Permite borrar resguardo identificada con el id dado
         '''
-        resguardo = self.get_object(id)
+        resguardo = self.get_object(id_resguardo_url)
         resguardo.delete()
         return Response({
             "detail": "Resguardo eliminada exitosamente."

@@ -55,8 +55,8 @@ INSTALLED_APPS = [
 ]
 
 SIMPLE_JWT = { # Alguna configuracion para los tokens a usar para autorizacion
-    'ACCESS_TOKEN_LIFETIME'     : timedelta(minutes = 10),
-    'REFRESH_TOKEN_LIFETIME'    : timedelta(days = 1),
+    'ACCESS_TOKEN_LIFETIME'     : timedelta(minutes = 1),
+    'REFRESH_TOKEN_LIFETIME'    : timedelta(minutes = 1),
     'ROTATE_REFRESH_TOKENS'     : False,  # Si se debe devolver un nuevo Refresh Token al hacer uso de un Refresh Token
     'BLACKLIST_AFTER_ROTATION'  : False,  # Si un Refresh Token utilizado debe mandarse a la lista negra (necesita de app de lista negra instalada)
     'UPDATE_LAST_LOGIN'         : True,   # Actualizar campo de Last time logged in de la tabla User

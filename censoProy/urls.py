@@ -36,11 +36,11 @@ urlpatterns = [
     path('ocupaciones/agregar/', censo_views.OcupacionCrearView.as_view()),
 
     path('etnias/', censo_views.EtniaListaView.as_view()),
-    path('enias/<int:id_etnia_url>', censo_views.EtniaDetailView.as_view()),
+    path('etnias/<int:id_etnia_url>', censo_views.EtniaDetailView.as_view()),
     path('etnias/agregar/', censo_views.EtniaCrearView.as_view()),
 
     path('resguardos/', censo_views.ResguardoListaView.as_view()),
-    path('resguardos/<int:id_etnia_url>', censo_views.ResguardoDetailView.as_view()),
+    path('resguardos/<int:id_resguardo_url>', censo_views.ResguardoDetailView.as_view()),
     path('resguardos/agregar/', censo_views.ResguardoCrearView.as_view()),
 
 

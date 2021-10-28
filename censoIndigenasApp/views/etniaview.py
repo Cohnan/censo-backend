@@ -56,23 +56,23 @@ class EtniaDetailView(APIView):
 
     def get_object(self, id):
         try:
-            return Etnia.objects.get(id=id) # Query SELECT * WHERE id=id
+            return Etnia.objects.get(id_etnia=id) # Query SELECT * WHERE id=id
         except Etnia.DoesNotExist:
             raise Http404
 
-    def get(self, request, id, format=None):
+    def get(self, request, id_etnia_url, format=None):
         '''
         Permite traer detalles de etnia identificada con el id dado
         '''
-        etnia = self.get_object(id)
+        etnia = self.get_object(id_etnia_url)
         serializer = EtniaSerializer(etnia)
         return Response(serializer.data)
 
-    def put(self, request, id, format=None):
+    def put(self, request, id_etnia_url, format=None):
         '''
         Permite actualizar detalles de etnia identificada con el id dado
         '''
-        etnia = self.get_object(id)
+        etnia = self.get_object(id_etnia_url)
         serializer = EtniaSerializer(etnia, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -85,11 +85,11 @@ class EtniaDetailView(APIView):
             "errors": serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, id, format=None):
+    def delete(self, request, id_etnia_url, format=None):
         '''
         Permite borrar etnia identificada con el id dado
         '''
-        etnia = self.get_object(id)
+        etnia = self.get_object(id_etnia_url)
         etnia.delete()
         return Response({
             "detail": "Etnia eliminada exitosamente."

@@ -56,23 +56,23 @@ class OcupacionDetailView(APIView):
 
     def get_object(self, id):
         try:
-            return Ocupacion.objects.get(id=id) # Query SELECT * WHERE id=id
+            return Ocupacion.objects.get(id_ocupacion=id) # Query SELECT * WHERE id=id
         except Ocupacion.DoesNotExist:
             raise Http404
 
-    def get(self, request, id, format=None):
+    def get(self, request, id_ocupacion_url, format=None):
         '''
         Permite traer detalles de ocupacion identificada con el id dado
         '''
-        ocupacion = self.get_object(id)
+        ocupacion = self.get_object(id_ocupacion_url)
         serializer = OcupacionSerializer(ocupacion)
         return Response(serializer.data)
 
-    def put(self, request, id, format=None):
+    def put(self, request, id_ocupacion_url, format=None):
         '''
         Permite actualizar detalles de ocupacion identificada con el id dado
         '''
-        ocupacion = self.get_object(id)
+        ocupacion = self.get_object(id_ocupacion_url)
         serializer = OcupacionSerializer(ocupacion, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -85,11 +85,11 @@ class OcupacionDetailView(APIView):
             "errors": serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, id, format=None):
+    def delete(self, request, id_ocupacion_url, format=None):
         '''
         Permite borrar ocupacion identificada con el id dado
         '''
-        ocupacion = self.get_object(id)
+        ocupacion = self.get_object(id_ocupacion_url)
         ocupacion.delete()
         return Response({
             "detail": "Ocupacion eliminada exitosamente."
