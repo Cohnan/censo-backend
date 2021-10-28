@@ -7,7 +7,7 @@ class PersonaSerializer(serializers.ModelSerializer):
     class Meta:
         # Variables que va a procesar el serialziador al llegar un json
         model = Persona
-        fields = ["tipo_doc" , "doc_id" , "id_ocupacion" , "nombre" , "fechadenacimiento" , "id_resguardo" , "id_etnia" , "departamento"]
+        fields = ["id", "tipo_doc" , "doc_id" , "id_ocupacion" , "nombre" , "fechadenacimiento" , "id_resguardo" , "id_etnia" , "departamento"]
 
         # Validar 
         validators = [
@@ -28,6 +28,7 @@ class PersonaSerializer(serializers.ModelSerializer):
         resguardo = obj.id_resguardo    #Instancia del tipo Resguardo
 
         return {
+            "id"                : persona.id,
             "tipo_doc"          : persona.tipo_doc,
             "doc_id"            : persona.doc_id,
             "nombre"            : persona.nombre,
